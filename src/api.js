@@ -1,49 +1,31 @@
 const path = require('path');
 const fs = require('fs');
+let mdFiles = [] 
 
-//the path is valid?
-const validPath = (route) => fs.existsSync(route); 
-
-//the path is Absolute, if false, then converts the Relative path to Absolute
-const convertPath = (route) => (path.isAbsolute(route) ? route : path.resolve(route));
-
-//the path is a File?
-const pathFile = (route) => fs.statSync(route).isFile();
-
-// reads the file
-const fileContent = (route) => fs.readFileSync(route);
-
-// reads the Directory
-const dirContent = (route) => fs.readdirSync(route);
-
-// gets the extension of the file
-const fileExt = (route) => path.extname(route)
-
-// gets markdown Files in an array
-const getsMdFiles = (route) => {
-    let arrayMdFiles = []
-    if (pathFile(route)){
-        if(fileExt(route) === '.md' || fileExt(route) === '.MARKDOWN'){
-            arrayMdFiles.push(route)
-        }
-    } else{
-        const filesInDir = dirContent(route);
-        filesInDir.map((file) => {
-            const pathFileJoin = path.join(route, file);
-            arrayMdFiles = arrayMdFiles.concat(getsMdFiles(pathFileJoin));
-        });
-    }
-    return arrayMdFiles;
-}
-    
+var recur = function(dir) {    
+    fs.readdir(dir,function(err,list){
+        if (err) return console.error(err)
+        list.forEach(function(file){
+            const file2 = path.resolve(dir, file);
+            fs.stat(file2,function(err,stats){
+                if (err) return console.error(err)
+                if(stats.isDirectory()) {
+                    recur(file2);
+                }
+                else {
+                    if(path.extname(file2) ==='.md' || path.extname(file2.toLowerCase()) ==='.markdown'){
+                        mdFiles.push(file2);
+                        console.log(mdFiles)
+                    }                    
+                }
+            })
+        })
+    });       
+};
 
 
-module.exports = {
-   validPath,
-   convertPath,
-   pathFile,
-   fileContent,
-   dirContent,
-   fileExt,
-   getsMdFiles
- };
+
+
+  module.exports = {
+    recur
+  }

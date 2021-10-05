@@ -1,3 +1,3 @@
-const { getsMdFiles } = require('./api');
+const { recur } = require('./api');
 
-console.log(getsMdFiles('../CDMX011-md-links'))
+console.log(recur('../CDMX011-md-links'));
