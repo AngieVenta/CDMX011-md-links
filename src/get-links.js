@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 // reads the file
 const fileContent = (route) => fs.readFileSync(route,'utf-8');
 
-// gets the links in Md files
+// gets the links in Md files with cheerio 
 const getLinks = (filePath) => {
     let arrayLinks = [];
 
