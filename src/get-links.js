@@ -10,13 +10,17 @@ const getLinks = (filePath) => {
     let arrayLinks = [];
 
     filePath.forEach((files) => {
+        //reads files
         const readMd = fileContent(files);
+        //markdown to HTML
         const mdToHTML = marked(readMd);
+        //we load the HTML document
         const readHTML = cheerio.load(mdToHTML);
-        readHTML('a').map((elem, i) =>
+        //With each(), we can loop over elements.
+        readHTML('a').each((i, elem) =>
             arrayLinks.push({ 
-                href: readHTML(i).attr('href'), 
-                text: readHTML(i).text(),
+                href: readHTML(elem).attr('href'), 
+                text: readHTML(elem).text(),
                 file: files
             }))
         
