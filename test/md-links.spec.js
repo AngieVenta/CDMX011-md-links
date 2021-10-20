@@ -80,7 +80,7 @@ describe('Validates the links in md/markdown files', () => {
   it('should be a function', () => {
     expect(typeof validateLinks).toBe('function');
   });
-  it('should return the HTTP status code of the link', () => {
+  it('should return the HTTP status code of the link (then of promise)', () => {
     const linkResult = {
       file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\src\\prueba\\testing.markdown',
       href: 'https://es.wikipedia.org/wiki/Markdown',

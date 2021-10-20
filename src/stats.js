@@ -48,7 +48,7 @@ const total = (linksArray) => {
   return hrefs.length;
 };
 
-const linksStats = (linksArray) => {
+const linksStats = (linksArray) => { // if validate is false
   const totalLinks = total(linksArray);
   const uniqueLinks = unique(linksArray);
   const linksResults = {
@@ -58,7 +58,7 @@ const linksStats = (linksArray) => {
   return linksResults;
 };
 
-const linksTotalStats = (linksValidated) => {
+const linksTotalStats = (linksValidated) => { // if validate is true
   const totalLinks = total(linksValidated);
   const uniqueLinks = unique(linksValidated);
   const brokenLinks = broken(linksValidated);

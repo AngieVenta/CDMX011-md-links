@@ -9,8 +9,7 @@ const getLinks = (filePath) => {
   const arrayLinks = [];
   filePath.forEach((files) => {
     const readMd = fileContent(files);
-    // understanding Renderer https://dustinpfister.github.io/2017/11/19/nodejs-marked/
-    const renderer = new marked.Renderer();
+    const renderer = new marked.Renderer(); // understanding Renderer https://dustinpfister.github.io/2017/11/19/nodejs-marked/
     renderer.link = (href, title, text) => {
       if (!href.startsWith('#')) {
         arrayLinks.push(

@@ -8,7 +8,7 @@ const mdLinks = (pathFiles, options = { validate: false, stats: false }) => new 
   const pathExists = validPath(pathFiles);
   if (pathExists) {
     const mdFiles = getsMdFiles(pathFiles);
-    if (mdFiles.length === 0) reject(new Error('There are no Markdown Files'));
+    if (mdFiles.length === 0) reject(new Error('There are no Markdown Files in the path'));
     const mdLinksFound = getLinks(mdFiles);
     if (mdLinksFound.length === 0) reject(new Error('There are no links'));
     if (options.validate === true && options.stats === false) {

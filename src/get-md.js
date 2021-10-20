@@ -12,7 +12,7 @@ const getsMdFiles = (route) => {
   const convertPath = (isAbsolute(route) ? route : resolve(route));
   // the path is a File?
   if (fs.lstatSync(convertPath).isFile()) {
-    if (extname(convertPath) === '.md' || extname(convertPath.toLowerCase()) === '.markdown') {
+    if (extname(convertPath) === '.md' || extname(convertPath.toLowerCase()) === '.markdown' || extname(convertPath.toLowerCase()) === '.mdown') {
       arrayMdFiles.push(convertPath);
     }
   } else {
