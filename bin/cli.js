@@ -13,7 +13,7 @@ console.log(chalk.blueBright(figlet.textSync('MD-LINKS', {
 })));
 const helpMessage = chalk.white(`
 ${chalk.bold('The valid format of the command is:')} 
-            << ${chalk.greenBright.bold('md-links + <path> + option')} >>
+            << ${chalk.greenBright.bold.underline('md-links + <path> + option')} >>
 
  Example: ${chalk.magentaBright('md-links ../CDMX011-md-links --validate')} 
   
@@ -48,7 +48,7 @@ if (args.length === 1) {
       console.log('\n', chalk.underline.bgCyan.bold('The links in your Markdown files are:'));
       res.map((object) => console.log('\n', chalk.magentaBright(object.file), chalk.yellow(object.href), chalk.blueBright(object.text)));
     })
-    .catch((err) => console.error('\n', chalk.redBright.bold(err), '\n', helpMessage));
+    .catch((err) => console.error('\n', chalk.redBright.bold.underline(err), '\n', helpMessage));
 }
 
 if (args.length === 2) {
@@ -64,14 +64,14 @@ if (args.length === 2) {
           return console.log('\n', chalk.magentaBright(object.file), chalk.yellow(object.href), statusColor, chalk.white(object.message), chalk.blue(object.text));
         });
       })
-      .catch((err) => console.error('\n', chalk.redBright.bold(err), '\n', helpMessage));
+      .catch((err) => console.error('\n', chalk.redBright.bold.underline(err), '\n', helpMessage));
   } else if (options.stats) {
     mdLinks(args[0], { validate: false, stats: true })
       .then((res) => {
         console.log('\n', chalk.underline.bgCyan.bold('The basic statistics about the links in your Markdown files are:'));
         console.log(`\nTotal: ${chalk.magentaBright(res.Total)} \nUnique: ${chalk.cyanBright(res.Unique)}`);
       })
-      .catch((err) => console.error('\n', chalk.redBright.bold(err), '\n', helpMessage));
+      .catch((err) => console.error('\n', chalk.redBright.bold.underline(err)));
   }
 }
 
@@ -82,6 +82,10 @@ if (args.length === 3) {
         console.log('\n', chalk.underline.bgCyan.bold('The statistics about the validated links are:'));
         console.log(`\nTotal: ${chalk.magentaBright(res.Total)} \nUnique: ${chalk.cyanBright(res.Unique)} \nBroken:${chalk.redBright(res.Broken)}`);
       })
-      .catch((err) => console.error('\n', chalk.redBright.bold(err), '\n', helpMessage));
+      .catch((err) => console.error('\n', chalk.redBright.bold.underline(err)));
   }
+}
+
+if (args[0] === undefined) {
+  console.log(helpMessage);
 }
