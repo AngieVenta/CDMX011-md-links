@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "jest --coverage",
+    "pretest": "npm run eslint",
     "eslint": "eslint --ext .js src/ bin/ test/"
   },
   "repository": {
