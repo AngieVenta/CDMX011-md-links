@@ -4,6 +4,7 @@ const { validateLinks } = require('./validate-links');
 const { linksStats, linksTotalStats } = require('./stats');
 
 // mdLiks function with 2 parameters (path, options)
+
 const mdLinks = (pathFiles, options = { validate: false, stats: false }) => new Promise((resolve, reject) => {
   const pathExists = validPath(pathFiles);
   if (pathExists) {

@@ -4,7 +4,7 @@ const mdFiles = [
   'C:\\Users\\Part\\cmder\\CDMX011-md-links\\src\\prueba.MARKDOWN',
 ];
 
-const mdLinks = [
+const mdLinksMock = [
   {
     href: 'https://es.wikipedia.org/wiki/Markdown',
     text: 'Markdown',
@@ -71,7 +71,7 @@ const mdLinksValid = [
     text: 'Tea',
   },
   {
-    file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\src\\prueba\\testing.markdown',
+    file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\src\\prueba.MARKDOWN',
     href: 'https://es.wikipedia.org/wiki/Markdown',
     message: 'OK',
     status: 200,
@@ -99,7 +99,7 @@ const linksTotalStatsRes = {
 
 module.exports = {
   mdFiles,
-  mdLinks,
+  mdLinksMock,
   linkValidT,
   linkBroken,
   mdLinksValid,
