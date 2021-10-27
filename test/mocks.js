@@ -65,7 +65,7 @@ const linkErrorRequest = {
   file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\README.md',
   href: 'https://www.drauta.com/que-es-nodejs-y-para-que-sirve',
   message: 'FAIL',
-  status: 'FAIL REQUEST',
+  status: 'FAIL RESPONSE',
   text: '¿Qué es Node.js y para qué sirve? - drauta.com',
 };
 

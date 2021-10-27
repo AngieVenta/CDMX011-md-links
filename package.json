@@ -1,7 +1,7 @@
 {
-  "name": "md-links",
+  "name": "md-links-gavp",
   "version": "0.1.0",
-  "description": "A library that saves and validates the status of the links inside a markdown file",
+  "description": "A library that finds and validates the status of the links inside a markdown file",
   "main": "src/index.js",
   "directories": {
     "test": "test"
@@ -18,7 +18,8 @@
   "keywords": [
     "JavaScript",
     "Node",
-    "Markdown"
+    "Markdown",
+    "md-links"
   ],
   "author": "Gloria Angélica Venta Pérez",
   "license": "MIT",
