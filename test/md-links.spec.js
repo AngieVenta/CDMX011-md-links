@@ -1,13 +1,16 @@
 /* eslint-env jest */
-
+const axios = require('axios');
 const { getsMdFiles, validPath } = require('../src/get-md');
 const { getLinks } = require('../src/get-links');
 const { validateLinks } = require('../src/validate-links');
 const { linksStats, linksTotalStats } = require('../src/stats');
 const {
-  mdFiles, mdLinks, linkValidT, linkBroken, mdLinksValid, linkValidResult,
-  linkBrokenResult, linksStatsResults, linksTotalStatsRes,
+  mdFiles, mdLinksMock, linkValidT, linkValidResult, mdLinksValid,
+  linksStatsResults, linksTotalStatsRes, linkBroken, linkBrokenResult,
+  linkErrorRequest, linkError,
 } = require('./mocks');
+
+jest.mock('axios');
 
 describe('Returns true if the path exists, false otherwise.', () => {
   it('should be a function', () => {
@@ -35,7 +38,7 @@ describe('Returns the links in md/markdown files', () => {
     expect(typeof getLinks).toBe('function');
   });
   it('should return the links of the md/mardown files in the directory', () => {
-    expect(getLinks(mdFiles)).toStrictEqual(mdLinks);
+    expect(getLinks(mdFiles)).toStrictEqual(mdLinksMock);
   });
 });
 
@@ -43,12 +46,27 @@ describe('Validates the links in md/markdown files', () => {
   it('should be a function', () => {
     expect(typeof validateLinks).toBe('function');
   });
-  it('should return the HTTP status code of the link (then of promise)', () => validateLinks(linkValidT).then((res) => {
+  test('should return the HTTP status code of the link (then of promise)', () => {
+    const resp = { status: 200, statusText: 'OK' };
+    axios.get.mockImplementation(() => Promise.resolve(resp));
+    return validateLinks(linkValidT).then((data) => expect(data).toEqual(linkValidResult));
+  });
+  test('should return the HTTP status code of the broken link (catch error.response of promise)', () => {
+    const resp = { status: 418, statusText: 'FAIL' };
+    axios.get.mockImplementation(() => Promise.resolve(resp));
+    return validateLinks(linkBroken).catch((data) => expect(data).toEqual(linkBrokenResult));
+  });
+  test('should catch error.request of promise', () => {
+    const resp = { status: 'FAIL REQUEST', statusText: 'FAIL' };
+    axios.get.mockImplementation(() => Promise.reject(resp));
+    return validateLinks(linkError).catch((data) => expect(data).toEqual(linkErrorRequest));
+  });
+  /* it('should return the HTTP status code of the link (then of promise)', () => validateLinks(linkValidT).then((res) => {
     expect(res).toStrictEqual(linkValidResult);
   }));
   it('should return the HTTP status code of the broken link (catch error of promise)', () => validateLinks(linkBroken).catch((err) => {
     expect(err).toStrictEqual(linkBrokenResult);
-  }));
+  })); */
 });
 
 describe('Gets basic statistics about the links', () => {
@@ -56,7 +74,7 @@ describe('Gets basic statistics about the links', () => {
     expect(typeof linksStats).toBe('function');
   });
   it('should return the Total and Unique Links', () => {
-    expect(linksStats(mdLinks)).toStrictEqual(linksStatsResults);
+    expect(linksStats(mdLinksMock)).toStrictEqual(linksStatsResults);
   });
 });
 
