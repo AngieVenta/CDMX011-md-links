@@ -55,6 +55,20 @@ const linkBrokenResult = {
   text: 'Tea',
 };
 
+const linkError = {
+  href: 'https://www.drauta.com/que-es-nodejs-y-para-que-sirve',
+  text: '¿Qué es Node.js y para qué sirve? - drauta.com',
+  file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\README.md',
+};
+
+const linkErrorRequest = {
+  file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\README.md',
+  href: 'https://www.drauta.com/que-es-nodejs-y-para-que-sirve',
+  message: 'FAIL',
+  status: 'FAIL REQUEST',
+  text: '¿Qué es Node.js y para qué sirve? - drauta.com',
+};
+
 const mdLinksValid = [
   {
     file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\src\\prueba\\testing.markdown',
@@ -105,6 +119,8 @@ module.exports = {
   mdLinksValid,
   linkValidResult,
   linkBrokenResult,
+  linkError,
+  linkErrorRequest,
   linksStatsResults,
   linksTotalStatsRes,
 };

@@ -26,7 +26,4 @@ const getLinks = (filePath) => {
   return arrayLinks;
 };
 
-module.exports = {
-  getLinks,
-  fileContent,
-};
+module.exports.getLinks = getLinks;

@@ -1,15 +1,16 @@
 /* eslint-env jest */
-
-const axios = jest.fn();
+const axios = require('axios');
 const { getsMdFiles, validPath } = require('../src/get-md');
 const { getLinks } = require('../src/get-links');
 const { validateLinks } = require('../src/validate-links');
 const { linksStats, linksTotalStats } = require('../src/stats');
 const {
-  mdFiles, mdLinksMock, linkValidT, linkBroken, mdLinksValid, linkValidResult,
-  linkBrokenResult, linksStatsResults, linksTotalStatsRes,
+  mdFiles, mdLinksMock, linkValidT, linkValidResult, mdLinksValid,
+  linksStatsResults, linksTotalStatsRes, linkBroken, linkBrokenResult,
+  linkErrorRequest, linkError,
 } = require('./mocks');
-const { mdLinks } = require('../src/index');
+
+jest.mock('axios');
 
 describe('Returns true if the path exists, false otherwise.', () => {
   it('should be a function', () => {
@@ -45,24 +46,27 @@ describe('Validates the links in md/markdown files', () => {
   it('should be a function', () => {
     expect(typeof validateLinks).toBe('function');
   });
-  // it('should return the HTTP status code of the link (then of promise)', () => validateLinks(linkValidT).then((res) => {
-  //   expect(res).toStrictEqual(linkValidResult);
-  // }));
-  // it('should return the HTTP status code of the broken link (catch error of promise)', () => validateLinks(linkBroken).catch((err) => {
-  //   expect(err).toStrictEqual(linkBrokenResult);
-  // }));
-  it('should return the HTTP status code of the link (then of promise)', () => {
-    axios.mockResolvedValue(linkValidT);
-    return validateLinks(linkValidT).then((res) => {
-      expect(res).toStrictEqual(linkValidResult);
-    });
+  test('should return the HTTP status code of the link (then of promise)', () => {
+    const resp = { status: 200, statusText: 'OK' };
+    axios.get.mockImplementation(() => Promise.resolve(resp));
+    return validateLinks(linkValidT).then((data) => expect(data).toEqual(linkValidResult));
   });
-  it('should return the HTTP status code of the broken link (catch error of promise)', () => {
-    axios.mockResolvedValue(linkBroken);
-    return validateLinks(linkBroken).catch((res) => {
-      expect(res).toStrictEqual(linkBrokenResult);
-    });
+  test('should return the HTTP status code of the broken link (catch error.response of promise)', () => {
+    const resp = { status: 418, statusText: 'FAIL' };
+    axios.get.mockImplementation(() => Promise.resolve(resp));
+    return validateLinks(linkBroken).catch((data) => expect(data).toEqual(linkBrokenResult));
   });
+  test('should catch error.request of promise', () => {
+    const resp = { status: 'FAIL REQUEST', statusText: 'FAIL' };
+    axios.get.mockImplementation(() => Promise.reject(resp));
+    return validateLinks(linkError).catch((data) => expect(data).toEqual(linkErrorRequest));
+  });
+  /* it('should return the HTTP status code of the link (then of promise)', () => validateLinks(linkValidT).then((res) => {
+    expect(res).toStrictEqual(linkValidResult);
+  }));
+  it('should return the HTTP status code of the broken link (catch error of promise)', () => validateLinks(linkBroken).catch((err) => {
+    expect(err).toStrictEqual(linkBrokenResult);
+  })); */
 });
 
 describe('Gets basic statistics about the links', () => {
@@ -80,31 +84,5 @@ describe('Function that gets the statistics about the links validated (Broken ad
   });
   it('should return the Total, Unique and Broken Links', () => {
     expect(linksTotalStats(mdLinksValid)).toStrictEqual(linksTotalStatsRes);
-  });
-});
-
-describe('Md links function with options validate and stats.', () => {
-  it('should be a function', () => {
-    expect(typeof mdLinks).toBe('function');
-  });
-  it('should return the links founded (validate: false, stats: false', () => {
-    mdLinks('../CDMX011-md-links/src', { validate: false, stats: false }).then((res) => {
-      expect(res).toStrictEqual(mdLinksMock);
-    });
-  });
-  it('should return the links validated (validate: true, stats: false', () => {
-    mdLinks('../CDMX011-md-links/src', { validate: true, stats: false }).then((res) => {
-      expect(res).toStrictEqual(mdLinksValid);
-    });
-  });
-  it('should return basic statistics about the links (validate: true, stats: false', () => {
-    mdLinks('../CDMX011-md-links/src', { validate: false, stats: true }).then((res) => {
-      expect(res).toStrictEqual(linksStatsResults);
-    });
-  });
-  it('should return statistics about the links validated (validate: true, stats: true', () => {
-    mdLinks('../CDMX011-md-links/src', { validate: true, stats: true }).then((res) => {
-      expect(res).toStrictEqual(linksTotalStatsRes);
-    });
   });
 });
