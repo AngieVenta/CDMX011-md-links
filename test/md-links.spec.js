@@ -57,7 +57,7 @@ describe('Validates the links in md/markdown files', () => {
     return validateLinks(linkBroken).catch((data) => expect(data).toEqual(linkBrokenResult));
   });
   test('should catch error.request of promise', () => {
-    const resp = { status: 'FAIL REQUEST', statusText: 'FAIL' };
+    const resp = { status: 'FAIL RESPONSE', statusText: 'FAIL' };
     axios.get.mockImplementation(() => Promise.reject(resp));
     return validateLinks(linkError).catch((data) => expect(data).toEqual(linkErrorRequest));
   });

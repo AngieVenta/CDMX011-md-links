@@ -26,7 +26,7 @@ const validateLinks = async (links) => await axios.get(links.href)
       // http.ClientRequest in node.js
       return {
         ...links,
-        status: 'FAIL REQUEST',
+        status: 'FAIL RESPONSE',
         message: 'FAIL',
       };
     }
