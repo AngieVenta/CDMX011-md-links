@@ -91,6 +91,7 @@ manera a través de la **terminal**:
 `md-links <path-to-file> [options]`
 
 Por ejemplo:
+
 ![md-links](https://i.ibb.co/kMhYZGb/mdLinks.jpg)
 
 El comportamiento por defecto no valda si las URLs responden ok o no, solo identifica el archivo markdown (a partir de la ruta que recibe como argumento), analiza el archivo Markdown e imprimir los links que vaya encontrando, junto con la ruta del archivo donde aparece y el texto
@@ -103,6 +104,7 @@ que hay dentro del link (truncado a 50 caracteres).
 Si pasas la opción `--validate`, el módulo hace una petición HTTP para averiguar si el link funciona o no. Si el link resulta en una redirección a una URL que responde ok, entonces consideraremos el link como ok.
 
 Por ejemplo:
+
 ![md-links validate](https://i.ibb.co/dP0YC0M/md-Links-validate.jpg) 
 
 El _output_ en este caso incluye la palabra `ok` o `fail` después de
