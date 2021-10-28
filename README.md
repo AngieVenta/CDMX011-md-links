@@ -114,12 +114,14 @@ URL.
 Si pasas la opción `--stats` el output (salida) será un texto con estadísticas básicas sobre los links.
 
 Por ejemplo:
+
 ![md-links stats](https://i.ibb.co/tBXhRw4/md-Links-stats.jpg) 
 
 También puedes combinar `--stats` y `--validate` para obtener estadísticas que
 necesiten de los resultados de la validación.
 
 Por ejemplo:
+
 ![md-links validate & stats](https://i.ibb.co/D7KtTbv/md-Links-val-stats.jpg) 
 
 ## 4. Dependencies y devDependencies
