@@ -1,6 +1,6 @@
 {
   "name": "md-links-gavp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A library that finds and validates the status of the links inside a markdown file",
   "main": "src/index.js",
   "directories": {
