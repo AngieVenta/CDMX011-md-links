@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 
 // function that validates the links https://stackoverflow.com/questions/31710768/how-can-i-fetch-an-array-of-urls-with-promise-all
-const validateLinks = async (links) => await axios.get(links.href)
+const validateLinks = (links) => axios.get(links.href)
   .then((res) => {
     if (res.status >= 200 && res.status < 400) {
       return {
