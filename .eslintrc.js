@@ -23,4 +23,3 @@ module.exports = {
     'no-return-await': ['off'],
   },
 };
-

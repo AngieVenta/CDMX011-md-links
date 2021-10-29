@@ -27,17 +27,11 @@ const linksStats = (linksArray) => { // if validate is false
   return linksResults;
 };
 
-const linksTotalStats = (linksValidated) => { // if validate is true
-  const totalLinks = total(linksValidated);
-  const uniqueLinks = unique(linksValidated);
-  const brokenLinks = broken(linksValidated);
-  const linksResults = {
-    Total: totalLinks,
-    Unique: uniqueLinks,
-    Broken: brokenLinks,
-  };
-  return linksResults;
-};
+const linksTotalStats = (linksValidated) => ({
+  Total: total(linksValidated),
+  Unique: unique(linksValidated),
+  ...linksValidated[0].status && { Broken: broken(linksValidated) },
+});
 
 module.exports = {
   linksStats,

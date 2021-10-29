@@ -7,12 +7,14 @@ const validPath = (route) => fs.existsSync(route);
 
 // gets markdown Files in an array
 const getsMdFiles = (route) => {
+  const supportedExtensions = ['.md', '.markdown', '.mdown'];
   let arrayMdFiles = [];
   // the path is Absolute, if false, then converts the Relative path to Absolute
   const convertPath = (isAbsolute(route) ? route : resolve(route));
+  const extension = extname(convertPath.toLowerCase());
   // the path is a File?
   if (fs.lstatSync(convertPath).isFile()) {
-    if (extname(convertPath) === '.md' || extname(convertPath.toLowerCase()) === '.markdown' || extname(convertPath.toLowerCase()) === '.mdown') {
+    if (supportedExtensions.includes(extension)) {
       arrayMdFiles.push(convertPath);
     }
   } else {
