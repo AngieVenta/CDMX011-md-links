@@ -1,35 +1,4 @@
 // important https://stackoverflow.com/questions/2218999/how-to-remove-all-duplicates-from-an-array-of-objects
-/* const links = [
-    {
-      href: 'https://es.wikipedia.org/wiki/Markdown',
-      text: 'Markdown',
-      file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\src\\prueba.MARKDOWN',
-      status: 200,
-      message: 'OK'
-    },
-    {
-      href: 'https://developer.mozilla.org/en-US/404',
-      text: 'SoftwareIntegration',
-      file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\src\\prueba.MARKDOWN',
-      status: 404,
-      message: 'FAIL'
-    },
-    {
-        href: 'https://developer.mozilla.org/en-US/404',
-        text: 'SoftwareIntegration',
-        file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\src\\prueba.MARKDOWN',
-        status: 404,
-        message: 'FAIL'
-    },
-    {
-        href: 'https://es.wikipedia.org/wiki/Markdown',
-        text: 'Markdown',
-        file: 'C:\\Users\\Part\\cmder\\CDMX011-md-links\\src\\prueba.MARKDOWN',
-        status: 200,
-        message: 'OK'
-    }
-  ];
- */
 
 const unique = (linksArray) => {
   const hrefs = linksArray.map((urls) => urls.href);
