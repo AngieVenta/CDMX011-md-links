@@ -7,7 +7,7 @@ const { linksStats, linksTotalStats } = require('../src/stats');
 const {
   mdFiles, mdLinksMock, linkValidT, linkValidResult, mdLinksValid,
   linksStatsResults, linksTotalStatsRes, linkBroken, linkBrokenResult,
-  linkErrorRequest, linkError,
+  /* linkErrorRequest, linkError, */
 } = require('./mocks');
 
 jest.mock('axios');
@@ -46,21 +46,23 @@ describe('Validates the links in md/markdown files', () => {
   it('should be a function', () => {
     expect(typeof validateLinks).toBe('function');
   });
-  test('should return the HTTP status code of the link (then of promise)', () => {
+  test('should return the HTTP status code of the link (then of promise)', async () => {
     const resp = { status: 200, statusText: 'OK' };
     axios.get.mockImplementation(() => Promise.resolve(resp));
-    return validateLinks(linkValidT).then((data) => expect(data).toEqual(linkValidResult));
+    await expect(validateLinks(linkValidT)).resolves.toEqual(linkValidResult);
+    expect(axios.get).toHaveBeenCalledWith('https://es.wikipedia.org/wiki/Markdown');
   });
-  test('should return the HTTP status code of the broken link (catch error.response of promise)', () => {
+  test('should return the HTTP status code of the broken link (catch error.response of promise)', async () => {
     const resp = { status: 418, statusText: 'FAIL' };
     axios.get.mockImplementation(() => Promise.resolve(resp));
-    return validateLinks(linkBroken).catch((data) => expect(data).toEqual(linkBrokenResult));
+    await validateLinks(linkBroken).catch((data) => expect(data).toEqual(linkBrokenResult));
+    expect(axios.get).toHaveBeenCalled();
   });
-  test('should catch error.request of promise', () => {
+  /* test('should catch error.request of promise', () => {
     const resp = { status: 'FAIL RESPONSE', statusText: 'FAIL' };
     axios.get.mockImplementation(() => Promise.reject(resp));
     return validateLinks(linkError).catch((data) => expect(data).toEqual(linkErrorRequest));
-  });
+  }); */
   /* it('should return the HTTP status code of the link (then of promise)', () => validateLinks(linkValidT).then((res) => {
     expect(res).toStrictEqual(linkValidResult);
   }));
